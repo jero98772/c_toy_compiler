@@ -36,6 +36,28 @@ public:
      */
     std::unique_ptr<ASTNode> parseExpression();
 
+    /**
+     * @brief Parses an "if" statement and returns the corresponding AST node.
+     * 
+     * This method processes the tokens from the lexer to parse an "if" statement 
+     * in the source code and constructs an AST node that represents it. It is part 
+     * of the grammar rules for handling conditional branching in the code.
+     * 
+     * @return A unique pointer to the root AST node representing the parsed "if" statement.
+     */
+    std::unique_ptr<ASTNode> parseIfStatement();
+
+    /**
+     * @brief Parses a "while" statement and returns the corresponding AST node.
+     * 
+     * This method processes the tokens from the lexer to parse a "while" loop statement 
+     * in the source code and constructs an AST node that represents it. This handles 
+     * the parsing logic for looping constructs.
+     * 
+     * @return A unique pointer to the root AST node representing the parsed "while" statement.
+     */
+    std::unique_ptr<ASTNode> parseWhileStatement();
+
 private:
     Lexer &lexer;         /**< Reference to the lexer used for tokenizing the input */
     Token currentToken;   /**< The current token being processed */

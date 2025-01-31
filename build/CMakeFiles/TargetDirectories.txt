@@ -1,0 +1,7 @@
+/tmp/c_toy_compiler/build/CMakeFiles/intrinsics_gen.dir
+/tmp/c_toy_compiler/build/CMakeFiles/omp_gen.dir
+/tmp/c_toy_compiler/build/CMakeFiles/acc_gen.dir
+/tmp/c_toy_compiler/build/CMakeFiles/RISCVTargetParserTableGen.dir
+/tmp/c_toy_compiler/build/CMakeFiles/toy_compiler.dir
+/tmp/c_toy_compiler/build/CMakeFiles/edit_cache.dir
+/tmp/c_toy_compiler/build/CMakeFiles/rebuild_cache.dir

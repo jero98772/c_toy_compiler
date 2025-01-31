@@ -1,46 +1,56 @@
+#include <fstream>
+#include <iostream>
 #include "lexer.hpp"
 #include "parser.hpp"
 #include "codegen.hpp"
-#include <iostream>
 
 /**
- * @brief Entry point for the program.
+ * @brief The main entry point for the compiler program.
  * 
- * This is the main function that drives the process of lexical analysis, parsing,
- * code generation, and printing intermediate representation (IR).
- * It takes a simple arithmetic expression as a source string, lexes it, parses it
- * into an abstract syntax tree (AST), and then generates and prints the intermediate code.
+ * This program takes a source file as input, tokenizes it, parses it into an abstract 
+ * syntax tree (AST), generates intermediate representation (IR) code, and optionally 
+ * executes the IR code using JIT compilation.
  * 
- * The source string used here is "5 + 3;" for testing purposes.
+ * Usage: 
+ * ./toy_compiler <source-file>
  * 
- * @return Exit status of the program.
+ * @param argc The number of command-line arguments.
+ * @param argv The array of command-line arguments.
+ * @return 0 if the program completes successfully, or 1 if there was an error.
  */
-int main() {
-    // The source code to be processed (simple arithmetic expression).
-    std::string source = "5 + 3;";
+int main(int argc, char* argv[]) {
+    // Check if the source file argument is provided
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <source-file>\n";
+        return 1;
+    }
 
-    // Create a lexer object with the given source code.
-    // The lexer tokenizes the input string into meaningful components (tokens).
+    // Open the source file for reading
+    std::ifstream inputFile(argv[1]);
+    if (!inputFile) {
+        std::cerr << "Could not open file " << argv[1] << std::endl;
+        return 1;
+    }
+
+    // Read the entire source file into a string
+    std::string source((std::istreambuf_iterator<char>(inputFile)), std::istreambuf_iterator<char>());
+
+    // Create a lexer and parser for tokenizing and parsing the source code
     Lexer lexer(source);
-
-    // Create a parser object, passing the lexer to it.
-    // The parser processes the tokens from the lexer and builds an abstract syntax tree (AST).
     Parser parser(lexer);
 
-    // Parse the expression into an AST.
-    // The AST represents the structure of the expression.
+    // Parse the source code into an abstract syntax tree (AST)
     auto ast = parser.parseExpression();
 
-    // Create a code generator object.
-    // This will generate intermediate representation (IR) from the AST.
+    // Generate the intermediate representation (IR) code from the AST
     CodeGen codeGen;
-
-    // Generate the intermediate code from the AST.
     codeGen.generate(ast.get());
 
-    // Print the generated intermediate representation.
+    // Print the generated IR code
     codeGen.printIR();
 
-    // Return 0 to indicate successful execution.
+    // Uncomment the next line to run JIT execution of the generated IR
+    // codeGen.runJIT();
+
     return 0;
 }
