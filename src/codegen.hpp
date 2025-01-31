@@ -27,6 +27,7 @@ public:
      */
     llvm::Value* generate(ASTNode *node);
 
+    void runJIT();
     /**
      * @brief Prints the generated LLVM IR to the standard output.
      */
